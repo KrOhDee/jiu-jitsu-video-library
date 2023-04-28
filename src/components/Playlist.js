@@ -1,28 +1,36 @@
 import { useEffect, useState } from 'react';
 import { auth, firestore } from '../firebase';
+import {
+  collection,
+  doc,
+  deleteDoc,
+  onSnapshot,
+  query,
+  where,
+} from 'firebase/firestore';
 
 function Playlist() {
   const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firestore
-      .collection('playlists')
-      .where('userId', '==', auth().currentUser.uid)
-      .onSnapshot((snapshot) => {
-        const newPlaylist = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+    const playlistRef = collection(firestore, 'playlists');
+    const q = query(playlistRef, where('userId', '==', auth.currentUser.uid));
 
-        setPlaylist(newPlaylist);
-      });
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const newPlaylist = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setPlaylist(newPlaylist);
+    });
 
     return () => unsubscribe();
   }, []);
 
   const removeFromPlaylist = async (videoId) => {
     try {
-      await firestore.collection('playlists').doc(videoId).delete();
+      await deleteDoc(doc(collection(firestore, 'playlists'), videoId));
       alert('Video removed from your playlist.');
     } catch (error) {
       alert(error.message);

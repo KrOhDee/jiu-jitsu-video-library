@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import youtubeApi from '../youtubeApi';
 import { auth, firestore } from '../firebase';
-
+import { addDoc, collection } from 'firebase/firestore';
 import '../styles/Home.css';
 
 function Home() {
@@ -28,6 +28,7 @@ function Home() {
   const handleNextPage = () => {
     setPageToken(nextPageToken);
     handleSearch(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const addToPlaylist = async (video) => {
@@ -37,7 +38,8 @@ function Home() {
     }
 
     try {
-      await firestore.collection('playlists').add({
+      const playlistRef = collection(firestore, 'playlists');
+      await addDoc(playlistRef, {
         userId: auth.currentUser.uid,
         videoId: video.id.videoId,
         title: video.snippet.title,

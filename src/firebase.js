@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAWVx1rtM3Hu650ZPCvDswcbsipYRnrCMA',
-  authDomain: 'jiu-jitsu-library-41b02.firebaseapp.com',
-  projectId: 'jiu-jitsu-library-41b02',
-  storageBucket: 'jiu-jitsu-library-41b02.appspot.com',
-  messagingSenderId: '718998829755',
-  appId: '1:718998829755:web:46cfa0c7c39749197d479e',
-  measurementId: 'G-7Q9D9QGSX0',
+  authDomain: 'jiu-jitsu-library.firebaseapp.com',
+  projectId: 'jiu-jitsu-library',
+  storageBucket: 'jiu-jitsu-library.appspot.com',
+  messagingSenderId: '310592510039',
+  appId: '1:310592510039:web:b1ae0c5d5792d11b332b12',
+  measurementId: 'G-3XX5BC3Z95',
 };
 
 const app = initializeApp(firebaseConfig);
