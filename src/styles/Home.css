@@ -1,0 +1,53 @@
+.home-container {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-input {
+  font-size: 18px;
+  padding: 10px;
+  width: 70%;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-button {
+  font-size: 18px;
+  padding: 10px;
+  background-color: red;
+  color: #fff;
+}
+
+.video-iframe {
+  margin-left: -150px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .video-card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%;
+    margin-bottom: 20px;
+  }
+
+  .video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
