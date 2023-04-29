@@ -8,24 +8,31 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import '../styles/Playlist.css';
 
 function Playlist() {
   const [playlist, setPlaylist] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const playlistRef = collection(firestore, 'playlists');
-    const q = query(playlistRef, where('userId', '==', auth.currentUser.uid));
+    const userId = auth.currentUser?.uid;
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const newPlaylist = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    // Only fetch the playlist if the user is signed in
+    if (userId) {
+      const q = query(playlistRef, where('userId', '==', userId));
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const newPlaylist = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-      setPlaylist(newPlaylist);
-    });
-
-    return () => unsubscribe();
+        // Update the state with the fetched playlist and set isLoading to false
+        setPlaylist(newPlaylist);
+        setIsLoading(false);
+      });
+      return () => unsubscribe();
+    }
   }, []);
 
   const removeFromPlaylist = async (videoId) => {
@@ -37,15 +44,32 @@ function Playlist() {
     }
   };
 
+  // Show a loading message while the playlist is being fetched
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div>
-      <h1>Your Playlist</h1>
-      <div>
+    <div className="playlist-container">
+      <h1 className="your-playlist-title">Your Playlist</h1>
+      <div className="videos-container">
         {playlist.map((video) => (
-          <div key={video.videoId}>
-            <img src={video.thumbnail} alt={video.title} />
-            <h3>{video.title}</h3>
-            <button onClick={() => removeFromPlaylist(video.id)}>
+          <div key={video.videoId} className="video-card">
+            <iframe
+              className="video-iframe"
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${video.videoId}`}
+              title={video.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <h3 className="video-title">{video.title}</h3>
+            <button
+              className="remove-button"
+              onClick={() => removeFromPlaylist(video.id)}
+            >
               Remove from Playlist
             </button>
           </div>

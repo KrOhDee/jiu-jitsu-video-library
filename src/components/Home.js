@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import React from 'react';
 import youtubeApi from '../youtubeApi';
 import { auth, firestore } from '../firebase';
 import { addDoc, collection } from 'firebase/firestore';
@@ -10,13 +11,14 @@ function Home() {
   const [pageToken, setPageToken] = useState('');
   const [nextPageToken, setNextPageToken] = useState('');
 
+  // Handle search term input and fetch videos from YouTube API
   const handleSearch = async (e, isFormSubmit = false) => {
     if (isFormSubmit) {
       e.preventDefault();
     }
     const response = await youtubeApi.get('/search', {
       params: {
-        q: searchTerm + ' jiu-jitsu',
+        q: searchTerm || 'jiu jitsu',
         type: 'video',
         pageToken,
       },
@@ -25,14 +27,16 @@ function Home() {
     setNextPageToken(response.data.nextPageToken);
   };
 
+  // Load next page of videos from YouTube API
   const handleNextPage = () => {
     setPageToken(nextPageToken);
     handleSearch(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Add a video to the user's playlist in Firebase
   const addToPlaylist = async (video) => {
-    if (!auth.currentUser) {
+    if (!auth.currentUser || !auth.currentUser.uid) {
       alert('Please sign in to add videos to your playlist.');
       return;
     }
@@ -50,6 +54,11 @@ function Home() {
       alert(error.message);
     }
   };
+
+  // Fetch videos from YouTube API on page load
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <div className="home-container">

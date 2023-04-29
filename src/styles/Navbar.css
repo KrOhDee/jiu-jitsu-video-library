@@ -1,7 +1,6 @@
 .navbar-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 10px;
   padding-left: 20px;
   background-color: red;
@@ -10,18 +9,21 @@
 
 .navbar-title {
   font-size: 24px;
+  display: flex;
+  align-items: center;
   margin: 0;
 }
 
 .navbar-links {
   display: flex;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .navbar-links li {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .navbar-links a,
@@ -41,4 +43,15 @@
 .navbar-links a.active-link,
 .navbar-links button:hover {
   color: #fca311;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+}
+
+@media (max-width: 500px) {
+  .navbar-links li {
+    margin-right: 5px;
+  }
 }

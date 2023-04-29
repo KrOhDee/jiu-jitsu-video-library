@@ -1,0 +1,40 @@
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.sign-in-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.sign-in-input {
+  font-size: 1.6rem;
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 30rem;
+  max-width: 100%;
+}
+
+.sign-in-button {
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  .sign-in-input {
+    width: 80%;
+  }
+}

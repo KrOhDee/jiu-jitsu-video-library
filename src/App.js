@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
 import Home from './components/Home';
 import Playlist from './components/Playlist';
 import SignIn from './components/SignIn';

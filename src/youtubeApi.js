@@ -5,7 +5,7 @@ const youtubeApi = axios.create({
   params: {
     part: 'snippet',
     maxResults: 5,
-    key: 'AIzaSyCJwrX8TpHqXI2TnJAB0DbxDSmJl7p5RFw',
+    key: 'AIzaSyDqnF7GwLdEJgvk-VOP2_78t1x-BtQDoSc',
   },
 });
 
