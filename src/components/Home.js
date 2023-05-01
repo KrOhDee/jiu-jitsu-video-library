@@ -18,7 +18,7 @@ function Home() {
     }
     const response = await youtubeApi.get('/search', {
       params: {
-        q: searchTerm || 'jiu jitsu',
+        q: searchTerm ? `jiu jitsu ${searchTerm}` : 'jiu jitsu',
         type: 'video',
         pageToken,
       },
